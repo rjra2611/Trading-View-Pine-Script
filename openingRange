@@ -1,0 +1,17 @@
+//@version=2
+// strategy(shorttitle = "Short Market Only", title="Short", overlay=true, pyramiding=1, default_qty_type=strategy.percent_of_equity, default_qty_value=100)
+study(title="Opening Variable Range", shorttitle="ORB", overlay=true)
+
+TF=input("20")
+is_newbar(res) => change(time(res)) != 0
+
+adopt(r, s) => security(tickerid, r, s)
+
+ORH = valuewhen(is_newbar('D'), high, 0)
+ORL = valuewhen(is_newbar('D'), low, 0)
+ORA = (ORH + ORL)/2
+
+High = plot(adopt(TF, ORH), color = #FF0000, linewidth = 2)
+Low = plot(adopt(TF, ORL), color = #008000, linewidth = 2)
+
+///////////////////////////////////////////////////////////////
