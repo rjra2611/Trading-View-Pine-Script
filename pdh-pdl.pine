@@ -1,0 +1,10 @@
+//@version=2
+// strategy(shorttitle = "TManyMA Strategy - ST9 - Long Market Only", title="Triple Many Moving Averages", overlay=true, pyramiding=1, default_qty_type=strategy.percent_of_equity, default_qty_value=100)
+study(title="Prev-Day High Low", shorttitle="PDH-PDL",overlay=true)
+
+
+prev_High = security(tickerid, 'D', high[1])
+prev_low = security(tickerid, 'D', low[1])
+plot(prev_High)
+plot(prev_low)
+
