@@ -1,0 +1,21 @@
+//@version=2
+// strategy(shorttitle = "intial Short Market Only", title="Short", overlay=true, pyramiding=1, default_qty_type=strategy.percent_of_equity, default_qty_value=100)
+study(title="Short Entry Indicator", shorttitle="Short", overlay=true)
+
+change_threshold = 3
+gap_threshold = 1
+prev_to_prev_close = security(tickerid, 'D', close[2]) 
+prev_close = security(tickerid, 'D', close[1])
+prev_low = security(tickerid, 'D', low[1])
+prev_high = security(tickerid, 'D', high[1])
+change = (prev_close-prev_to_prev_close)/prev_to_prev_close*100
+
+open_price = security(tickerid, 'D', open)
+sell_condition = (change>=change_threshold) and (open_price<prev_close)
+gap = abs((open_price-prev_close)/prev_close*100)
+
+target = (prev_high+prev_low)/2
+entry_condition =  sell_condition and gap>gap_threshold
+// miss_condition = sell_condition and gap<=gap_threshold
+
+plotshape(entry_condition, title="Overbought", location=location.abovebar, transp=0, style=shape.triangledown, text="OB")
